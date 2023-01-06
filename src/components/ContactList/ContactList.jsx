@@ -1,31 +1,38 @@
-import PropTypes from 'prop-types'; // ES6
-
 import { BsFillPersonLinesFill } from 'react-icons/bs';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { deteleContact } from '../../redux/contactsSlice';
 import { ContactsList, ContactItem, Button } from './ContactList.styled';
 
-export const ContactList = ({ items, onDelete }) => {
-  return (
-    <ContactsList>
-      {items.map(({ id, name, number }) => {
-        return (
-          <ContactItem key={id}>
-            <BsFillPersonLinesFill style={{ color: '#f21d6a' }} />
-            {name} : {number}
-            <Button onClick={() => onDelete(id)}>Delete</Button>
-          </ContactItem>
-        );
-      })}
-    </ContactsList>
+const getVisibleContacts = (contacts, filter) => {
+  return contacts.filter(contact =>
+    contact.name.toLowerCase().includes(filter.toLowerCase())
   );
 };
 
-ContactList.propTypes = {
-  items: PropTypes.arrayOf(
-    PropTypes.exact({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired,
-    })
-  ).isRequired,
+export const ContactList = ({ items }) => {
+  const contacts = useSelector(state => state.contacts);
+  const filter = useSelector(state => state.filter);
+  const dispatch = useDispatch();
+  const filteredContacts = getVisibleContacts(contacts, filter);
+
+  return (
+    <ContactsList>
+      {!filteredContacts.length ? (
+        <div>Contact list is empty</div>
+      ) : (
+        contacts.map(({ id, name, number }) => {
+          return (
+            <ContactItem key={id}>
+              <BsFillPersonLinesFill style={{ color: '#f21d6a' }} />
+              {name} : {number}
+              <Button onClick={() => dispatch(deteleContact(id))}>
+                Delete
+              </Button>
+            </ContactItem>
+          );
+        })
+      )}
+    </ContactsList>
+  );
 };
