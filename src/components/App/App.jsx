@@ -2,7 +2,6 @@
 // При загрузке приложения, контакты, если таковые есть, считываются из локального хранилища и записываются в состояние.
 
 // import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 // import { addContact, deteleContact } from '../../redux/contactsSlice';
 
 import { DivSection, Title, TitleTwo } from './App.styled';
