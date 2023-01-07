@@ -1,6 +1,7 @@
 import { BsFillPersonLinesFill } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { getContacts, getFilter } from 'redux/selectors';
 import { deteleContact } from '../../redux/contactsSlice';
 import { ContactsList, ContactItem, Button } from './ContactList.styled';
 
@@ -10,18 +11,16 @@ const getVisibleContacts = (contacts, filter) => {
   );
 };
 
-export const ContactList = ({ items }) => {
-  const contacts = useSelector(state => state.contacts);
-  const filter = useSelector(state => state.filter);
+export const ContactList = () => {
+  const contacts = useSelector(getContacts);
+  const filter = useSelector(getFilter);
   const dispatch = useDispatch();
   const filteredContacts = getVisibleContacts(contacts, filter);
 
   return (
     <ContactsList>
-      {!filteredContacts.length ? (
-        <div>Contact list is empty</div>
-      ) : (
-        contacts.map(({ id, name, number }) => {
+      {contacts.length > 0 ? (
+        filteredContacts.map(({ id, name, number }) => {
           return (
             <ContactItem key={id}>
               <BsFillPersonLinesFill style={{ color: '#f21d6a' }} />
@@ -32,6 +31,8 @@ export const ContactList = ({ items }) => {
             </ContactItem>
           );
         })
+      ) : (
+        <div>There are no contacts</div>
       )}
     </ContactsList>
   );

@@ -3,6 +3,8 @@
 
 // import React, { useState, useEffect } from 'react';
 // import { addContact, deteleContact } from '../../redux/contactsSlice';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { DivSection, Title, TitleTwo } from './App.styled';
 import { Form } from '../Form/Form';
@@ -16,8 +18,8 @@ export const App = () => {
       <Form />
       <TitleTwo>Contacts</TitleTwo>
       <Filter />
-
       <ContactList />
+      <ToastContainer />
     </DivSection>
   );
 };

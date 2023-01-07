@@ -30,6 +30,7 @@ export const Button = styled.button`
   border-radius: 5px;
   transition: all 200ms cubic-bezier(0.15, 0.52, 0.6, 0.69);
   background-color: #e7dae8;
+  box-shadow: 0px 0px 1px 1px rgba(184, 164, 184, 1);
 
   &:hover,
   :focus {
